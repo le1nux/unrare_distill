@@ -1,0 +1,30 @@
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2pt, align=center,
+    text width=2.45cm, minimum height=1.35cm, inner sep=4pt,
+    font=\fontsize{8}{9}\selectfont\sffamily},
+  link/.style={-{Stealth[length=2mm]}, thick},
+  node distance=0.40cm
+]
+\node[box, fill=black!5] (grades)
+  {LLM grades\\E1: expert\\E2: ratings};
+\node[box, fill=black!5, right=of grades] (retrieval)
+  {Embedding retrieval\\E3: fidelity};
+\node[box, dashed, right=of retrieval] (exchange)
+  {Wanted contact\\User-judged};
+\node[box, dashed, right=of exchange] (support)
+  {Peer support\\Proposed outcome};
+\draw[link] (grades) -- (retrieval);
+\draw[link, dashed] (retrieval) -- (exchange);
+\draw[link, dashed] (exchange) -- (support);
+\node[align=center, inner sep=0pt, font=\fontsize{8}{9}\selectfont\sffamily, text width=12.1cm,
+  below=0.18cm of retrieval.south east, anchor=north, xshift=0.25cm]
+  {Conditions: informative profiles, usable languages, reachable/willing peers, ability to decline.\\
+   Monitor: unwanted contact, unequal exposure, privacy loss, function creep.};
+\end{tikzpicture}
+\Description{Medical-LLM grades are assessed against one expert and historical user ratings. An embedding retrieval model is assessed for fidelity to those grades. Dashed links from retrieval to mutually wanted contact and helpful peer support remain untested. Conditions and harms to monitor appear below.}
+\caption{Evidence-to-pathway map. Solid links are assessed here (E1--E3);
+dashed links are the targets of a consented, beneficiary-informed outcome study.}
+\label{fig:change}
+\end{figure}

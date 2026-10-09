@@ -1,0 +1,141 @@
+\begin{figure}[!htb]
+\centering
+\definecolor{plPanel}{HTML}{DAE8FC}\definecolor{plPanelLine}{HTML}{6C8EBF}%
+\definecolor{plCard}{HTML}{FFE6CC}\definecolor{plCardLine}{HTML}{D79B00}%
+\definecolor{plDoc}{HTML}{FFF2CC}\definecolor{plDocLine}{HTML}{D6B656}%
+\definecolor{plScore}{HTML}{F8CECC}\definecolor{plScoreLine}{HTML}{B85450}%
+\definecolor{plGrey}{HTML}{666666}\definecolor{plBadge}{HTML}{34425A}%
+\begin{tikzpicture}[
+  x=1cm, y=1cm,
+  every node/.style={font=\fontfamily{phv}\fontsize{5.9}{7.0}\selectfont,
+    inner sep=0pt, align=center, text=black},
+  panel/.style={draw=plPanelLine!50, fill=plPanel, rounded corners=8pt, line width=0.5pt},
+  ptitle/.style={font=\fontfamily{phv}\fontsize{6.8}{7.9}\selectfont\bfseries},
+  card/.style={draw=plCardLine, fill=plCard, rounded corners=4.5pt, line width=0.5pt},
+  flow/.style={-{Stealth[length=1.3mm, width=1.1mm]}, line width=0.6pt},
+  sheet/.style={font=\fontfamily{phv}\fontsize{5.4}{6.3}\selectfont},
+  badge/.style={circle, fill=plBadge, text=white, minimum size=0.26cm,
+    font=\fontfamily{phv}\fontsize{4.9}{4.9}\selectfont\bfseries},
+]
+\useasboundingbox (0,0) rectangle (12.18,4.05);
+\newcommand{\plDocShape}[4]{%
+  \filldraw[draw=plDocLine, fill=plDoc, line width=0.45pt]
+    (#1,#2) -- ++(#3,0) -- ++(0,#4-0.14) -- ++(-0.14,0.14) -- ++(-#3+0.14,0) -- cycle;
+  \draw[plDocLine, line width=0.45pt] (#1+#3-0.14,#2+#4) -- ++(0,-0.14) -- ++(0.14,0);}
+\newcommand{\plStack}[4]{%
+  \plDocShape{#1-#3/2+0.12}{#2-#4/2+0.12}{#3}{#4}%
+  \plDocShape{#1-#3/2+0.06}{#2-#4/2+0.06}{#3}{#4}%
+  \plDocShape{#1-#3/2}{#2-#4/2}{#3}{#4}}
+\newcommand{\plWave}[6]{%
+  \filldraw[draw=#6, fill=#5, line width=0.5pt]
+    (#1,#2+0.07) -- (#1,#2+#4) -- (#1+#3,#2+#4) -- (#1+#3,#2+0.07)
+    .. controls (#1+0.7*#3,#2+0.2) and (#1+0.45*#3,#2-0.1) .. (#1+0.2*#3,#2+0.01)
+    .. controls (#1+0.1*#3,#2+0.04) .. cycle;}
+\newcommand{\plNet}[3]{%
+  \begin{scope}[shift={(#1,#2)}, x=#3cm, y=#3cm]
+    \draw[plCardLine, line width=0.65pt] (90:1) -- (30:1) -- (-30:1) -- (-90:1) -- (-150:1) -- (150:1) -- cycle;
+    \foreach \a in {(-0.25,0.5),(0.25,0.5)}
+      \foreach \b in {(-0.45,0),(0,0),(0.45,0)} \draw[plCardLine, line width=0.35pt] \a -- \b;
+    \foreach \b in {(-0.45,0),(0,0),(0.45,0)}
+      \foreach \c in {(-0.25,-0.5),(0.25,-0.5)} \draw[plCardLine, line width=0.35pt] \b -- \c;
+    \foreach \p in {(-0.25,0.5),(0.25,0.5),(-0.45,0),(0,0),(0.45,0),(-0.25,-0.5),(0.25,-0.5)}
+      \filldraw[draw=plCardLine, fill=plCard, line width=0.4pt] \p circle (0.12);
+  \end{scope}}
+\newcommand{\plPerson}[3]{%
+  \begin{scope}[shift={(#1,#2)}, x=#3cm, y=#3cm, line width=0.5pt, plGrey]
+    \draw (0,0.55) -- (0,1.05); \draw (-0.26,0) -- (0,0.55) -- (0.26,0);
+    \draw (-0.32,0.88) -- (0.32,0.88); \filldraw[fill=white] (0,1.25) circle (0.2);
+  \end{scope}}
+\newcommand{\plConvert}[2]{%
+  \begin{scope}[shift={(#1,#2)}, line width=0.5pt, plGrey]
+    \draw[fill=white, rounded corners=0.6pt] (-0.40,-0.17) rectangle (-0.12,0.17);
+    \node[text=plGrey, font=\fontfamily{phv}\fontsize{5}{5}\selectfont\bfseries] at (-0.26,0) {\{\,\}};
+    \draw[fill=white, rounded corners=0.6pt] (0.12,-0.17) rectangle (0.40,0.17);
+    \node[text=plGrey, font=\fontfamily{phv}\fontsize{5.6}{5.6}\selectfont\bfseries] at (0.26,0) {\#};
+    \draw[-{Stealth[length=0.9mm, width=0.9mm]}] (-0.08,0) -- (0.08,0);
+  \end{scope}}
+\newcommand{\plRules}[2]{%
+  \begin{scope}[shift={(#1,#2)}, line width=0.45pt, plGrey]
+    \draw[fill=white, rounded corners=0.8pt] (-0.17,-0.2) rectangle (0.17,0.2);
+    \foreach \y in {0.1,0,-0.1} {\draw (-0.11,\y-0.03) rectangle ++(0.06,0.06);
+      \draw (-0.01,\y) -- (0.11,\y);}
+  \end{scope}}
+
+\filldraw[panel] (1.10,0) rectangle (4.55,4.05);
+\filldraw[panel] (4.65,0) rectangle (8.52,4.05);
+\filldraw[panel] (8.62,0) rectangle (12.18,4.05);
+\node[ptitle] at (2.825,3.69) {(1) Source pseudonymized\\profile data};
+\node[ptitle] at (6.585,3.69) {(2) Collect LLM-sourced\\teacher grades};
+\node[ptitle] at (10.40,3.69) {(3) Derive light-weight\\matchers};
+
+\plStack{0.46}{1.72}{0.92}{1.12}
+\node[sheet] at (0.46,1.64) {\textbf{3,584}\\JSON\\profiles};
+
+\filldraw[card] (1.22,1.86) rectangle (2.88,3.30);
+\node[anchor=north] at (2.05,3.17) {\textbf{Collect} human\\judgments};
+\plPerson{1.70}{1.98}{0.26}\plPerson{2.05}{2.11}{0.26}\plPerson{2.40}{1.98}{0.26}
+\plWave{3.04}{2.63}{1.44}{0.67}{plScore}{plScoreLine}
+\node[sheet, anchor=north] at (3.76,3.20) {\textbf{HCP scores}\\66 pairs};
+\plWave{3.04}{1.86}{1.44}{0.67}{plScore}{plScoreLine}
+\node[sheet, anchor=north] at (3.76,2.43) {\textbf{User ratings}\\$\approx$15k records};
+\node[badge] at (4.44,3.30) {E1};
+\node[badge] at (4.44,2.53) {E2};
+
+\filldraw[card] (1.22,0.14) rectangle (2.88,1.58);
+\node[anchor=north] at (2.05,1.45) {\textbf{Translate} and\\\textbf{transcribe}};
+\node[sheet] at (2.05,0.80) {DE $\rightarrow$ EN\\with a local LLM};
+\plConvert{2.05}{0.40}
+\plStack{3.73}{0.80}{1.14}{1.08}
+\node[sheet] at (3.73,0.74) {\textbf{Markdown}\\profile\\texts};
+
+\draw[flow] (1.03,1.72) -- (1.08,1.72) |- (1.22,2.58);
+\draw[flow] (1.08,1.72) |- (1.22,0.86);
+\draw[flow] (2.88,2.99) -- (3.04,2.99);
+\draw[flow] (2.88,2.22) -- (3.04,2.22);
+\draw[flow] (2.88,0.86) -- (3.16,0.86);
+\node[sheet, text=plGrey, align=center] at (0.50,0.52) {+\,ontology\\context};
+\draw[flow, plGrey] (0.90,0.52) -- (1.22,0.52);
+
+\plWave{4.77}{1.98}{1.85}{1.32}{plDoc}{plDocLine}
+\node[sheet, align=left, anchor=north west] at (4.88,3.19)
+  {\textbf{Matching prompt}\\0--5 rubric: +1 if \ldots\\Profiles A, B: \ldots\\Score:};
+\filldraw[card] (4.77,0.14) rectangle (6.62,1.62);
+\node[anchor=north] at (5.695,1.49) {\textbf{Grade} pairs with\\LLM-as-a-judge};
+\node[sheet] at (5.695,0.86) {MedGemma 27B};
+\plNet{5.695}{0.42}{0.21}
+\draw[flow] (5.695,2.04) -- (5.695,1.62);
+\draw[flow] (4.42,0.86) -- (4.77,0.86);
+
+\plWave{6.80}{1.10}{1.62}{1.64}{plScore}{plScoreLine}
+\node[sheet, align=left, anchor=north west] at (6.91,2.64)
+  {\textbf{Teacher grades}\\{\color{plGrey}$\approx$6M pairs, 0--5}\\Profile 7 $\times$ 9:\enspace 2\\Profile 9 $\times$ 6:\enspace 1\\\ldots\\Profile 4 $\times$ 5:\enspace 5};
+\draw[flow] (6.62,0.86) -| (7.30,1.13);
+
+\draw[plGrey!80, line width=1pt] (10.66,0.20) -- (10.66,3.24);
+\filldraw[card] (8.72,1.86) rectangle (10.57,3.30);
+\node[anchor=north] at (9.645,3.17) {\textbf{Fine-tune}\\embedding\\retrieval model};
+\plNet{9.645}{2.12}{0.19}
+\filldraw[card] (8.72,0.14) rectangle (10.57,1.58);
+\node[anchor=north] at (9.645,1.45) {\textbf{Train} pairwise\\MLP scorer on\\profile vectors};
+\plNet{9.645}{0.40}{0.19}
+\node[badge] at (8.955,1.72) {E3};
+\node[sheet, anchor=west] at (9.135,1.72) {held-out fidelity};
+
+\filldraw[card] (10.75,1.86) rectangle (12.08,3.30);
+\node[anchor=north] at (11.415,3.17) {\textbf{Apply}\\pretrained\\encoders};
+\plNet{11.415}{2.12}{0.19}
+\filldraw[card] (10.75,0.14) rectangle (12.08,1.58);
+\node[anchor=north] at (11.415,1.45) {\textbf{Apply}\\deployed\\rules};
+\plRules{11.415}{0.40}
+
+\draw[flow] (8.42,1.91) -- (8.575,1.91) |- (8.72,2.58);
+\draw[flow] (8.575,1.91) |- (8.72,0.86);
+\end{tikzpicture}
+\Description{Three blue stage panels, redrawn from the original overview. Stage 1: 3,584 pseudonymized JSON profiles feed two tasks: collecting human judgments, which yields scores from one HCP on 66 pairs (E1) and about 15,000 user rating records (E2), and LLM translation from German to English and transcription into Markdown profile texts, with disease-ontology context added before transcription. Stage 2: a matching prompt with a 0 to 5 rubric and the profile texts are graded by MedGemma 27B as an LLM judge, yielding teacher grades for about 6 million of the 6.4 million attempted pairs. Stage 3: the teacher grades train two students, a fine-tuned embedding retrieval model and a pairwise MLP scorer on frozen profile vectors, whose held-out fidelity is E3; pretrained embedding retrieval models and the deployed rules serve as baselines.}
+\caption{Pipeline overview (MLP: multilayer perceptron). Teacher grades are the
+only student supervision; students encode the same Markdown texts. HCP scores
+(E1; pairs sampled across teacher grades) and user ratings (E2) evaluate teacher
+and students; E3 measures the students' fidelity to the teacher on users excluded
+from training (Sect.~\ref{sec:findings}). Example rows are placeholders.}
+\label{fig:pipeline}
+\end{figure}

@@ -1,0 +1,36 @@
+\begin{table}[!tb]
+\caption{Top-ten exposure on the test lists of Table~\ref{tab:fidelity-ecir} (356 users,
+median 169 candidates): how evenly each scorer spreads its suggestions across
+users. The exposure columns use no labels and do not measure match quality;
+NDCG@5 repeats Table~\ref{tab:fidelity-ecir} and measures agreement with the LLM teacher's
+grades, not the HCP's. Columns are defined in Sect.~\ref{sec:exposure}; ties are
+averaged and random shows expected exposure. Bold marks the best scorer (highest
+NDCG, least concentration). FT means fine-tuned.}
+\label{tab:exposure}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.05}
+\begin{tabular}{lrrrrrr}
+\toprule
+& NDCG & \multicolumn{3}{c}{Top-ten exposure} & \multicolumn{2}{c}{Diagnostics} \\
+Model & @5 & Gini & Top 10\% & Never & Overlap & $R^2$ \\
+\midrule
+Random order (expected) & -- & 0.03 & 0.11 & 0 & 0.06 & -- \\
+Teacher-grade order & -- & 0.41 & 0.27 & 0 & 0.15 & 0.30 \\
+\addlinespace[2pt]
+\multicolumn{7}{l}{\textbf{Pretrained embedder baselines (cosine)}} \\
+\model{MSMARCO BERT Base Dot v5} & 0.60 & 0.48 & 0.33 & 14 & 0.14 & 0.31 \\
+\model{Arctic Embed M v2.0} & 0.64 & \textbf{0.42} & 0.27 & 12 & 0.16 & 0.28 \\
+\addlinespace[2pt]
+\multicolumn{7}{l}{\textbf{Existing task baseline}} \\
+Deployed rules & 0.58 & 0.43 & \textbf{0.26} & \textbf{8} & -- & 0.26 \\
+\addlinespace[2pt]
+\multicolumn{7}{l}{\textbf{Our models}} \\
+\model{Arctic+linear} & 0.57 & 0.91 & 0.91 & 282 & 0.10 & 0.95 \\
+\model{Arctic+MLP} & 0.74 & 0.65 & 0.44 & 82 & 0.17 & 0.60 \\
+\model{FT Arctic+cosine} & \textbf{0.77} & 0.53 & 0.38 & 21 & 0.19 & 0.63 \\
+\model{FT Arctic+MLP} & 0.76 & 0.63 & 0.44 & 67 & 0.17 & 0.56 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,35 @@
+\definecolor{sdTeacher}{HTML}{000000}\definecolor{sdGemma}{HTML}{0072B2}\definecolor{sdSmall}{HTML}{009E73}\definecolor{sdRules}{HTML}{CC79A7}%
+\begin{tikzpicture}[
+  font=\fontsize{8}{9}\selectfont\sffamily,
+  tick/.style={font=\fontsize{7}{8}\selectfont\sffamily, inner sep=1.5pt},
+  plabel/.style={font=\fontsize{6}{7}\selectfont\sffamily, inner sep=1.2pt},
+  curve/.style={line width=0.9pt, line join=round},
+  pt/.style={circle, fill, inner sep=0pt, minimum size=2.6pt},
+]
+\begin{scope}[xshift=0.75cm, yshift=0.6cm, x=0.68cm, y=2.952cm]
+  \draw[line width=0.4pt] (0,0) -- (5,0);
+  \draw[line width=0.4pt] (0,0) -- (0,1);
+  \foreach \x in {0,1,2,3,4,5}
+    \draw (\x,0) -- (\x,-0.02) node[tick, below] {\x};
+  \foreach \y/\l in {0.2/0.2,0.4/0.4,0.6/0.6,0.8/0.8,1/1}
+    \draw (0,\y) -- (-0.06,\y) node[tick, left] {\l};
+  \draw[curve, sdTeacher, solid] plot coordinates {(0,0.030697) (1,0.366514) (2,0.475334) (3,0.055908) (4,0.063475) (5,0.008072)};
+  \draw[curve, sdGemma, solid] plot coordinates {(0,0.000240) (1,0.098097) (2,0.370895) (3,0.284402) (4,0.219132) (5,0.027233)};
+  \draw[curve, sdSmall, solid] plot coordinates {(0,0.398097) (1,0.348228) (2,0.153594) (3,0.043005) (4,0.029642) (5,0.027435)};
+  \draw[curve, sdRules, densely dotted] plot coordinates {(0,0.792386) (1,0.144023) (2,0.020425) (3,0.005871) (4,0.000292) (5,0.037004)};
+  \foreach \x/\y in {0/0.030697,1/0.366514,2/0.475334,3/0.055908,4/0.063475,5/0.008072} \node[pt, sdTeacher] at (\x,\y) {};
+  \foreach \x/\y in {0/0.000240,1/0.098097,2/0.370895,3/0.284402,4/0.219132,5/0.027233} \node[pt, sdGemma] at (\x,\y) {};
+  \foreach \x/\y in {0/0.398097,1/0.348228,2/0.153594,3/0.043005,4/0.029642,5/0.027435} \node[pt, sdSmall] at (\x,\y) {};
+  \foreach \x/\y in {0/0.792386,1/0.144023,2/0.020425,3/0.005871,4/0.000292,5/0.037004} \node[pt, sdRules] at (\x,\y) {};
+  \draw[curve, sdTeacher, solid] (1.6,0.97) -- ++(0.45,0);
+  \node[plabel, anchor=west] at (2.15,0.97) {MedGemma 27B teacher};
+  \draw[curve, sdGemma, solid] (1.6,0.89) -- ++(0.45,0);
+  \node[plabel, anchor=west] at (2.15,0.89) {Gemma 27B};
+  \draw[curve, sdSmall, solid] (1.6,0.81) -- ++(0.45,0);
+  \node[plabel, anchor=west] at (2.15,0.81) {MedGemma 1.5 4B};
+  \draw[curve, sdRules, densely dotted] (1.6,0.73) -- ++(0.45,0);
+  \node[plabel, anchor=west] at (2.15,0.73) {Deployed rules};
+  \node[anchor=north] at (2.5,-0.142) {Predicted score};
+  \node[rotate=90, anchor=south] at (-0.7,0.5) {Fraction of pairs};
+\end{scope}
+\end{tikzpicture}
